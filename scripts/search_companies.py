@@ -1,9 +1,9 @@
 from googlesearch import search
 import csv
 
-def save_company_links_to_csv(keyword, num_links, filename='companies_links.csv'):
-    # Adds 'company' to the keyword
-    search_query = f'company or factories of {keyword} -best -top -ranking -wikipedia -quora -linkedin -glassdoor -indeed -yelp -bloomberg -forbes -fortune -money -inc -businessinsider -crunchbase -zoominfo -craft'    
+def save_company_links_to_csv(keyword, num_links, filename='companies_links_japan.csv'):
+    # Converts the keyword to a search query in Japanese, focusing on companies and factories in Japan
+    search_query = f'{keyword} の会社 や 工場 -最高 -トップ -ランキング -ウィキペディア -クオラ -リンクトイン -グラスドア -インディード -イェルプ -ブルームバーグ -フォーブス -フォーチュン -マネー -インク -ビジネスインサイダー -クランチベース -ズームインフォ -クラフト'
 
     # Initializes a counter for the results
     count = 0
@@ -14,8 +14,8 @@ def save_company_links_to_csv(keyword, num_links, filename='companies_links.csv'
         # Writes the column headers
         writer.writerow(['Keyword', 'URL'])
 
-        # Performs the search on Google
-        for url in search(search_query, stop=num_links):
+        # Performs the search on Google with Japanese preferences
+        for url in search(search_query, stop=num_links, lang='ja', country='JP'):
             # Writes the result into the CSV file
             writer.writerow([keyword, url])
             # Increments the counter
@@ -25,7 +25,7 @@ def save_company_links_to_csv(keyword, num_links, filename='companies_links.csv'
                 break
 
 # Example of use
-keyword = "hardware for pc"
+keyword = "PC ハードウェア"  # "PC hardware" in Japanese
 num_links = 5
 
 save_company_links_to_csv(keyword, num_links)

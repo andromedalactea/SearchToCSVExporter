@@ -1,53 +1,31 @@
-import requests
-from bs4 import BeautifulSoup
+from googlesearch import search
 import csv
 
-def google_search_first_company_url(keyword):
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    google_search_url = f'https://www.google.com/search?q={keyword}'
-    response = requests.get(google_search_url, headers=headers)
-    print(response.text)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        # Busca el primer resultado de búsqueda. Este selector podría necesitar actualizaciones.
-        first_result = soup.find('div', class_='tF2Cxc')
-        if first_result:
-            link = first_result.find('a', href=True)
-            if link:
-                return link['href']
-    return None
+def save_company_links_to_csv(keyword, num_links, filename='companies_links_japan.csv'):
+    # Converts the keyword to a search query in Japanese, focusing on companies and factories in Japan
+    search_query = f'{keyword} の会社 や 工場 -最高 -トップ -ランキング -ウィキペディア -クオラ -リンクトイン -グラスドア -インディード -イェルプ -ブルームバーグ -フォーブス -フォーチュン -マネー -インク -ビジネスインサイダー -クランチベース -ズームインフォ -クラフト'
 
-def save_urls_to_csv(keywords, filename='company_urls.csv'):
+    # Initializes a counter for the results
+    count = 0
+
+    # Opens the CSV file in write mode
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
+        # Writes the column headers
         writer.writerow(['Keyword', 'URL'])
-        for keyword in keywords:
-            url = google_search_first_company_url(keyword)
-            print(f'Keyword: {keyword} - URL: {url}')
+
+        # Performs the search on Google with Japanese preferences
+        for url in search(search_query, stop=num_links, lang='ja', country='JP'):
+            # Writes the result into the CSV file
             writer.writerow([keyword, url])
+            # Increments the counter
+            count += 1
+            # Checks if the desired number of links has been reached
+            if count >= num_links:
+                break
 
-# Lista de palabras clave para buscar
-keywords = ['OpenAI', 'Google AI', 'Microsoft AI']
+# Example of use
+keyword = "PC ハードウェア"  # "PC hardware" in Japanese
+num_links = 5
 
-#save_urls_to_csv(keywords)
-
-
-import requests
-from bs4 import BeautifulSoup
-
-# Reemplaza 'url_de_la_pagina' con la URL de la página que deseas analizar
-url = 'https://www.google.com/search?q=OpenAI'
-
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
-
-urls_http = []
-
-# Busca todas las etiquetas <a>, extrae los atributos 'href' que comiencen con "http://"
-for link in soup.find_all('a', href=True):
-    if link['href'].startswith('/url?q=http://'):
-        urls_http.append(link['href'])
-
-# Imprime las URLs que comienzan con "http://"
-for url in urls_http:
-    print(url)
+save_company_links_to_csv(keyword, num_links)
