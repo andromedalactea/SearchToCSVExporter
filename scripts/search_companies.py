@@ -2,29 +2,29 @@ from googlesearch import search
 import csv
 
 def save_company_links_to_csv(keyword, num_links, filename='companies_links.csv'):
-    # Agrega ' company' a la palabra clave
-    search_query = f'company or factories of {keyword} -mejores -top -ranking -wikipedia -quora -linkedin -glassdoor -indeed -yelp -bloomberg -forbes -fortune -money -inc -businessinsider -crunchbase -zoominfo -craft'    
+    # Adds 'company' to the keyword
+    search_query = f'company or factories of {keyword} -best -top -ranking -wikipedia -quora -linkedin -glassdoor -indeed -yelp -bloomberg -forbes -fortune -money -inc -businessinsider -crunchbase -zoominfo -craft'    
 
-    # Inicializa un contador para los resultados
+    # Initializes a counter for the results
     count = 0
 
-    # Abre el archivo CSV en modo de escritura
+    # Opens the CSV file in write mode
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        # Escribe los encabezados de las columnas
+        # Writes the column headers
         writer.writerow(['Keyword', 'URL'])
 
-        # Realiza la búsqueda en Google
+        # Performs the search on Google
         for url in search(search_query, stop=num_links):
-            # Escribe el resultado en el archivo CSV
+            # Writes the result into the CSV file
             writer.writerow([keyword, url])
-            # Incrementa el contador
+            # Increments the counter
             count += 1
-            # Verifica si se ha alcanzado el número deseado de links
+            # Checks if the desired number of links has been reached
             if count >= num_links:
                 break
 
-# Ejemplo de uso
+# Example of use
 keyword = "hardware for pc"
 num_links = 5
 
