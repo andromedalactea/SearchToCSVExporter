@@ -1,7 +1,7 @@
 from googlesearch import search
 import csv
 
-def save_company_links_to_csv(keyword, num_links, filename='companies_links_japan.csv'):
+def save_company_links_to_csv(keyword, num_links, filename='output_fiiles/companies_links_japan.csv'):
     # Converts the keyword to a search query in Japanese, focusing on companies and factories in Japan
     search_query = f'{keyword} の会社 や 工場 -最高 -トップ -ランキング -ウィキペディア -クオラ -リンクトイン -グラスドア -インディード -イェルプ -ブルームバーグ -フォーブス -フォーチュン -マネー -インク -ビジネスインサイダー -クランチベース -ズームインフォ -クラフト'
 
