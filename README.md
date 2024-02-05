@@ -39,3 +39,6 @@ This will search for "PC hardware" related companies in Japan and save the first
 ## Customization
 
 You can customize the search query by modifying the search_query variable in the script. The current configuration excludes several common domains to focus the search results on companies and factories in Japan.
+
+## License
+This project is open-sourced under the MIT license. See the LICENSE file for more details.
